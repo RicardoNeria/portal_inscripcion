@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Inscripción UnADM</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="assets/js/carrusel.js" defer></script> <!-- Enlace al archivo JavaScript del carrusel -->
+</head>
+<body onload="iniciarCarrusel()">
+    <header>
+        <img src="https://www.unadmexico.mx/images/banners/bannerSuperior_2024_v01.webp" alt="Banner UnADM">
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="formulario.html">Inscripción</a></li>
+                <li><a href="cursos.html">Cursos</a></li>
+                <li><a href="oferta_educativa.html">Oferta Educativa</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sección del Carrusel -->
+    <section class="carousel center">
+        <div class="carousel-container">
+            <button class="carousel-button prev" onclick="anteriorImagen()">&#10094;</button>
+            <img id="carousel-image" src="assets/images/Gaceta.webp" alt="Imagen del carrusel"
+                 onmouseover="agrandarImagen(this)" onmouseout="reducirImagen(this)" onclick="mostrarTexto()">
+            <p id="carousel-text" class="hidden">Descripción de la imagen actual</p>
+            <button class="carousel-button next" onclick="siguienteImagen()">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Nueva Sección: Imágenes destacadas de eventos de la UnADM -->
+    <section class="featured-images center">
+        <h2>Eventos Destacados de la UnADM</h2>
+        <div class="images-gallery">
+            <img src="assets/images/funcion_publica.webp" alt="Evento de la Secretaría de la Función Pública">
+            <img src="assets/images/unadm_actividad.webp" alt="Actividad de estudiantes en la UnADM">
+            <img src="assets/images/unadm_conferencia.webp" alt="Conferencia de la UnADM">
+            <img src="assets/images/unadm_graduacion.webp" alt="Ceremonia de graduación de la UnADM">
+        </div>
+    </section>
+
+    <footer>
+        <p>Contacto: contacto@unadm.edu.mx | Teléfono: (55) 1234-5678</p>
+    </footer>
+</body>
+</html>

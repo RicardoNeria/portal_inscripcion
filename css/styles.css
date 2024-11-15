@@ -1,0 +1,244 @@
+/* Ruta: css/styles.css */
+
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Encabezado */
+header {
+    background-color: #7d4b1f; /* Color café claro */
+    padding: 1em;
+    text-align: center;
+}
+
+header img {
+    max-width: 100%;
+}
+
+/* Navegación */
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+nav ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+/* Secciones Centradas */
+.center {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Carrusel de imágenes */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: relative;
+    text-align: center;
+}
+
+#carousel-image {
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+#carousel-text {
+    margin-top: 1em;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Botones de navegación del carrusel */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2em;
+    padding: 0.2em 0.5em;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+    transition: background-color 0.3s;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-button.prev {
+    left: 10px; /* Posición del botón "Anterior" */
+}
+
+.carousel-button.next {
+    right: 10px; /* Posición del botón "Siguiente" */
+}
+
+/* Botones */
+.button {
+    display: inline-block;
+    padding: 0.8em 1.5em;
+    background-color: #4b8eaf; /* Color gris plata */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.button.secondary {
+    background-color: #7d4b1f; /* Color café claro */
+}
+
+/* Botón de regreso en la esquina inferior derecha */
+.regresar-boton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 0.6em 1.2em;
+}
+
+/* Formulario */
+.form-section ul {
+    list-style: none;
+    padding: 0;
+    max-width: 400px;
+    margin: auto;
+}
+
+.form-section ul li {
+    margin-bottom: 1em;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tabla de cursos */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    background-color: white;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: left;
+}
+
+th {
+    background-color: #7d4b1f;
+    color: #f0f0f0;
+}
+
+/* Pie de página */
+footer {
+    background-color: rgba(125, 75, 31, 0.7); /* Fondo café claro */
+    color: white;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+
+/* Galería de imágenes */
+.images-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.images-gallery img {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.images-gallery img:hover {
+    transform: scale(1.1); /* Efecto de zoom al pasar el cursor */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    header img {
+        max-width: 200px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .media iframe, .images-gallery img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Ajustes para formularios en pantallas pequeñas */
+@media (max-width: 600px) {
+    .form-section ul {
+        max-width: 100%;
+        padding: 0 1em;
+    }
+    
+    input, select {
+        padding: 0.4em;
+    }
+}
+
+/* Ajustes adicionales de tabla para pantallas pequeñas */
+@media (max-width: 600px) {
+    table, th, td {
+        font-size: 0.9em;
+        padding: 0.8em;
+    }
+}

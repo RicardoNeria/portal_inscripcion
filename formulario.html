@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Inscripción</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/validaciones.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="https://www.unadmexico.mx/images/banners/bannerSuperior_2024_v01.webp" alt="Banner UnADM">
+    </header>
+    
+    <section class="form-section center">
+        <h2>Formulario de Inscripción</h2>
+        <p>Completa los siguientes campos para realizar tu inscripción en uno de nuestros programas académicos.</p>
+        <form action="php/procesar_inscripcion.php" method="post" onsubmit="return validarFormulario()">
+            <ul>
+                <li>
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </li>
+                <li>
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </li>
+                <li>
+                    <label for="identificacion">Número de Identificación:</label>
+                    <input type="text" id="identificacion" name="identificacion" minlength="6" required>
+                </li>
+                <li>
+                    <label for="curso">Selecciona un Curso:</label>
+                    <select id="curso" name="curso" required>
+                        <option value="MB101">Matemáticas Básicas</option>
+                        <option value="CS102">Ciencias Sociales</option>
+                        <option value="TE103">Tecnología en Ingeniería</option>
+                        <option value="SA104">Salud Pública</option>
+                        <option value="CM105">Ciencias Médicas</option>
+                        <option value="AE106">Administración de Empresas</option>
+                    </select>
+                </li>
+            </ul>
+            <input type="submit" value="Inscribirse" class="button">
+            <a href="index.html" class="button secondary regresar-boton">Regresar</a>
+        </form>
+    </section>
+
+    <footer>
+        <p>Contacto: contacto@unadm.edu.mx | Teléfono: (55) 1234-5678</p>
+    </footer>
+</body>
+</html>
