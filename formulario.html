@@ -15,7 +15,7 @@
     <section class="form-section center">
         <h2>Formulario de Inscripción</h2>
         <p>Completa los siguientes campos para realizar tu inscripción en uno de nuestros programas académicos.</p>
-        <form action="php/procesar_inscripcion.php" method="post" onsubmit="return validarFormulario()">
+        <form id="inscripcionForm">
             <ul>
                 <li>
                     <label for="nombre">Nombre Completo:</label>
@@ -49,5 +49,48 @@
     <footer>
         <p>Contacto: contacto@unadm.edu.mx | Teléfono: (55) 1234-5678</p>
     </footer>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Evita el envío tradicional del formulario
+
+            // Obtener los valores de los campos del formulario
+            const nombre = document.getElementById("nombre").value;
+            const correo = document.getElementById("correo").value;
+            const identificacion = document.getElementById("identificacion").value;
+            const curso = document.getElementById("curso").value;
+
+            // URL del servidor expuesto con ngrok
+            const apiUrl = 'https://ed34-2806-2a0-800-92ea-41aa-cb92-2f77-8844.ngrok-free.app/portal_inscripcion/api.php';
+
+            // Crear el objeto de datos para enviar
+            const data = {
+                nombre: nombre,
+                correo: correo,
+                identificacion: identificacion,
+                curso: curso
+            };
+
+            try {
+                // Enviar solicitud POST a la API de ngrok
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('¡Datos enviados correctamente!');
+                } else {
+                    alert('Error al enviar los datos. Intenta nuevamente.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un error al enviar los datos.');
+            }
+        });
+    </script>
 </body>
 </html>
