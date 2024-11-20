@@ -83,6 +83,14 @@
                     </select>
                 </li>
                 <li>
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </li>
+                <li>
+                    <label for="identificacion">Número de Identificación:</label>
+                    <input type="text" id="identificacion" name="identificacion" required>
+                </li>
+                <li>
                     <label for="curp">CURP:</label>
                     <input type="text" id="curp" name="curp" readonly>
                 </li>
@@ -122,14 +130,14 @@
             }
 
             // Definir la URL de la API
-            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php'; // Actualiza con tu URL de ngrok
+            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php';
 
             // Recopilar todos los valores del formulario
             const nombre = document.getElementById("nombre").value;
             const apellidoPaterno = document.getElementById("apellido_paterno").value;
             const apellidoMaterno = document.getElementById("apellido_materno").value;
-            const correo = "prueba@correo.com"; // Reemplaza con el valor adecuado
-            const identificacion = "123456"; // Reemplaza con el valor adecuado
+            const correo = document.getElementById("correo").value;
+            const identificacion = document.getElementById("identificacion").value;
             const curso = document.getElementById("curso").value;
 
             // Preparar los datos para enviar a la API
