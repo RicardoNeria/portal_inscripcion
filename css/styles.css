@@ -101,18 +101,18 @@ nav ul li a {
 }
 
 .carousel-button.prev {
-    left: 10px; /* Posición del botón "Anterior" */
+    left: 10px;
 }
 
 .carousel-button.next {
-    right: 10px; /* Posición del botón "Siguiente" */
+    right: 10px;
 }
 
 /* Botones */
 .button {
     display: inline-block;
     padding: 0.8em 1.5em;
-    background-color: #4b8eaf; /* Color gris plata */
+    background-color: #4b8eaf;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -122,7 +122,7 @@ nav ul li a {
 }
 
 .button.secondary {
-    background-color: #7d4b1f; /* Color café claro */
+    background-color: #7d4b1f;
 }
 
 /* Botón de regreso en la esquina inferior derecha */
@@ -158,6 +158,12 @@ input, select {
     border-radius: 5px;
 }
 
+/* Nuevos campos: CURP, RFC y Hora de Registro */
+input[readonly] {
+    background-color: #e9e9e9;
+    cursor: not-allowed;
+}
+
 /* Tabla de cursos */
 table {
     width: 100%;
@@ -179,7 +185,7 @@ th {
 
 /* Pie de página */
 footer {
-    background-color: rgba(125, 75, 31, 0.7); /* Fondo café claro */
+    background-color: rgba(125, 75, 31, 0.7);
     color: white;
     text-align: center;
     padding: 0.5em;
@@ -203,7 +209,7 @@ footer {
 }
 
 .images-gallery img:hover {
-    transform: scale(1.1); /* Efecto de zoom al pasar el cursor */
+    transform: scale(1.1);
 }
 
 /* Responsividad */

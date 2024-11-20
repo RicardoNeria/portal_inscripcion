@@ -28,8 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($data->nombre) && isset($data-
     $identificacion = $conn->real_escape_string($data->identificacion);
     $curso = $conn->real_escape_string($data->curso);
 
+    // Verificar si los campos de CURP y RFC están presentes y procesarlos si existen
+    $curp = isset($data->curp) ? $conn->real_escape_string($data->curp) : '';
+    $rfc = isset($data->rfc) ? $conn->real_escape_string($data->rfc) : '';
+
     // Crear la consulta SQL para insertar los datos en la base de datos
-    $sql = "INSERT INTO inscripciones (nombre, correo, identificacion, curso) VALUES ('$nombre', '$correo', '$identificacion', '$curso')";
+    $sql = "INSERT INTO inscripciones (nombre, correo, identificacion, curso, curp, rfc) VALUES ('$nombre', '$correo', '$identificacion', '$curso', '$curp', '$rfc')";
 
     // Ejecutar la consulta SQL e informar si fue exitosa o si hubo algún error
     if ($conn->query($sql) === TRUE) {

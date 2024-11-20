@@ -1,14 +1,15 @@
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$contrasena = "";
-$bd = "unadm";
+// conexion.php
 
-// Crear conexión
-$conexion = mysqli_connect($servidor, $usuario, $contrasena, $bd);
+$host = "localhost";
+$dbname = "unadm";
+$user = "root";
+$password = "";
 
-// Comprobar la conexión
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
+try {
+    $conexion = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error en la conexión: " . $e->getMessage());
 }
 ?>
