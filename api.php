@@ -1,50 +1,63 @@
 <?php
-// Configurar los encabezados CORS para permitir el acceso desde otras fuentes (como GitHub Pages)
+// Configuración de encabezados CORS para permitir acceso desde cualquier origen (necesario si usas ngrok o servidores externos)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json");
 
-// Conexión a la base de datos MySQL
+// Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "unadm"; // Reemplaza con el nombre de tu base de datos en XAMPP
+$dbname = "unadm";
 
-// Crear conexión con la base de datos
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar si hubo algún error en la conexión
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(["error" => "Error de conexión: " . $e->getMessage()]);
+    exit();
 }
 
 // Leer los datos del cuerpo de la solicitud POST
-$data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"), true);
 
-// Verificar si los datos existen y si es una solicitud POST
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($data->nombre) && isset($data->correo) && isset($data->identificacion) && isset($data->curso)) {
-    $nombre = $conn->real_escape_string($data->nombre);
-    $correo = $conn->real_escape_string($data->correo);
-    $identificacion = $conn->real_escape_string($data->identificacion);
-    $curso = $conn->real_escape_string($data->curso);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($data)) {
+    $nombre = $data['nombre'] ?? null;
+    $apellidoPaterno = $data['apellidoPaterno'] ?? null;
+    $apellidoMaterno = $data['apellidoMaterno'] ?? null;
+    $correo = $data['correo'] ?? null;
+    $identificacion = $data['identificacion'] ?? null;
+    $curso = $data['curso'] ?? null;
+    $curp = $data['curp'] ?? null;
+    $rfc = $data['rfc'] ?? null;
 
-    // Verificar si los campos de CURP y RFC están presentes y procesarlos si existen
-    $curp = isset($data->curp) ? $conn->real_escape_string($data->curp) : '';
-    $rfc = isset($data->rfc) ? $conn->real_escape_string($data->rfc) : '';
+    // Validación de datos básicos
+    if (!$nombre || !$correo || !$identificacion || !$curso) {
+        echo json_encode(["error" => "Datos incompletos. Por favor verifica los campos."]);
+        exit();
+    }
 
-    // Crear la consulta SQL para insertar los datos en la base de datos
-    $sql = "INSERT INTO inscripciones (nombre, correo, identificacion, curso, curp, rfc) VALUES ('$nombre', '$correo', '$identificacion', '$curso', '$curp', '$rfc')";
+    // Preparar e insertar datos en la base de datos
+    try {
+        $sql = "INSERT INTO inscripciones (nombre, apellido_paterno, apellido_materno, correo, identificacion, curso, curp, rfc) 
+                VALUES (:nombre, :apellidoPaterno, :apellidoMaterno, :correo, :identificacion, :curso, :curp, :rfc)";
+        $stmt = $conn->prepare($sql);
 
-    // Ejecutar la consulta SQL e informar si fue exitosa o si hubo algún error
-    if ($conn->query($sql) === TRUE) {
-        echo json_encode(array("message" => "Datos guardados correctamente"));
-    } else {
-        echo json_encode(array("error" => "Error al guardar los datos: " . $conn->error));
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':apellidoPaterno', $apellidoPaterno);
+        $stmt->bindParam(':apellidoMaterno', $apellidoMaterno);
+        $stmt->bindParam(':correo', $correo);
+        $stmt->bindParam(':identificacion', $identificacion);
+        $stmt->bindParam(':curso', $curso);
+        $stmt->bindParam(':curp', $curp);
+        $stmt->bindParam(':rfc', $rfc);
+
+        $stmt->execute();
+        echo json_encode(["status" => "success", "message" => "Inscripción exitosa"]);
+    } catch (PDOException $e) {
+        echo json_encode(["error" => "Error al guardar los datos: " . $e->getMessage()]);
     }
 } else {
-    echo json_encode(array("error" => "Datos incompletos o método no permitido"));
+    echo json_encode(["error" => "Solicitud no válida."]);
 }
-
-// Cerrar la conexión a la base de datos
-$conn->close();
 ?>

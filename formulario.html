@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/validaciones.js" defer></script>
 </head>
-<body>
+<body onload="mostrarFechaHoraYDatos();">
     <header>
         <img src="https://www.unadmexico.mx/images/banners/bannerSuperior_2024_v01.webp" alt="Banner UnADM">
     </header>
@@ -38,25 +38,6 @@
                     <input type="text" id="estado_nacimiento" name="estado_nacimiento" required oninput="actualizarCURPyRFC()">
                 </li>
                 <li>
-                    <label for="correo">Correo Electrónico:</label>
-                    <input type="email" id="correo" name="correo" required>
-                </li>
-                <li>
-                    <label for="identificacion">Número de Identificación:</label>
-                    <input type="text" id="identificacion" name="identificacion" minlength="6" required>
-                </li>
-                <li>
-                    <label for="curso">Selecciona un Curso:</label>
-                    <select id="curso" name="curso" required>
-                        <option value="MB101">Matemáticas Básicas</option>
-                        <option value="CS102">Ciencias Sociales</option>
-                        <option value="TE103">Tecnología en Ingeniería</option>
-                        <option value="SA104">Salud Pública</option>
-                        <option value="CM105">Ciencias Médicas</option>
-                        <option value="AE106">Administración de Empresas</option>
-                    </select>
-                </li>
-                <li>
                     <label for="curp">CURP:</label>
                     <input type="text" id="curp" name="curp" readonly>
                 </li>
@@ -65,7 +46,7 @@
                     <input type="text" id="rfc" name="rfc" readonly>
                 </li>
                 <li>
-                    <label for="horaRegistro">Hora de Registro:</label>
+                    <label for="horaRegistro">Hora y Fecha de Registro:</label>
                     <input type="text" id="horaRegistro" name="horaRegistro" readonly>
                 </li>
             </ul>
@@ -82,6 +63,9 @@
         document.querySelector("form").addEventListener("submit", async function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
 
+            // URL de la API; asegúrate de que apunte al endpoint correcto
+            const apiUrl = 'https://xxxxxx.ngrok.io/api.php'; // Reemplaza con tu URL pública de ngrok o ruta correcta
+
             // Obtener los valores de los campos del formulario
             const nombre = document.getElementById("nombre").value;
             const apellidoPaterno = document.getElementById("apellido_paterno").value;
@@ -91,9 +75,6 @@
             const curso = document.getElementById("curso").value;
             const curp = document.getElementById("curp").value;
             const rfc = document.getElementById("rfc").value;
-
-            // URL del servidor expuesto con ngrok
-            const apiUrl = 'https://2c56-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app';
 
             // Crear el objeto de datos para enviar
             const data = {
@@ -108,7 +89,6 @@
             };
 
             try {
-                // Enviar solicitud POST a la API de ngrok
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
@@ -120,11 +100,12 @@
                 if (response.ok) {
                     alert('¡Datos enviados correctamente!');
                 } else {
-                    alert('Error al enviar los datos. Intenta nuevamente.');
+                    const errorText = await response.text();
+                    alert('Error al enviar los datos: ' + errorText);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Hubo un error al enviar los datos.');
+                console.error('Error de conexión:', error);
+                alert('Hubo un error de conexión con el servidor.');
             }
         });
     </script>
