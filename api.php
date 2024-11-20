@@ -1,10 +1,8 @@
 <?php
-// Configuración de encabezados CORS para permitir acceso desde cualquier origen (necesario si usas ngrok o servidores externos)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json");
 
-// Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -18,7 +16,6 @@ try {
     exit();
 }
 
-// Leer los datos del cuerpo de la solicitud POST
 $data = json_decode(file_get_contents("php://input"), true);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($data)) {
@@ -31,13 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($data)) {
     $curp = $data['curp'] ?? null;
     $rfc = $data['rfc'] ?? null;
 
-    // Validación de datos básicos
     if (!$nombre || !$correo || !$identificacion || !$curso) {
         echo json_encode(["error" => "Datos incompletos. Por favor verifica los campos."]);
         exit();
     }
 
-    // Preparar e insertar datos en la base de datos
     try {
         $sql = "INSERT INTO inscripciones (nombre, apellido_paterno, apellido_materno, correo, identificacion, curso, curp, rfc) 
                 VALUES (:nombre, :apellidoPaterno, :apellidoMaterno, :correo, :identificacion, :curso, :curp, :rfc)";

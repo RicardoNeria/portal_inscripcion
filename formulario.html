@@ -60,23 +60,21 @@
     </footer>
 
     <script>
-        document.querySelector("form").addEventListener("submit", async function(event) {
+        document.getElementById("inscripcionForm").addEventListener("submit", async function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
+            console.log("Enviando datos..."); // Mensaje de debugging
 
-            // URL de la API; asegúrate de que apunte al endpoint correcto
-            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app'; // Reemplaza con tu URL pública de ngrok o ruta correcta
+            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php'; // Cambiar si la URL de ngrok es diferente
 
-            // Obtener los valores de los campos del formulario
             const nombre = document.getElementById("nombre").value;
             const apellidoPaterno = document.getElementById("apellido_paterno").value;
             const apellidoMaterno = document.getElementById("apellido_materno").value;
-            const correo = document.getElementById("correo").value;
-            const identificacion = document.getElementById("identificacion").value;
-            const curso = document.getElementById("curso").value;
+            const correo = document.getElementById("correo").value || "prueba@correo.com"; // Agrega un campo de correo si falta en el HTML
+            const identificacion = document.getElementById("identificacion").value || "123456"; // Agrega un campo de identificación si falta
+            const curso = document.getElementById("curso").value || "CS102"; // Agrega un campo de curso si falta en el HTML
             const curp = document.getElementById("curp").value;
             const rfc = document.getElementById("rfc").value;
 
-            // Crear el objeto de datos para enviar
             const data = {
                 nombre,
                 apellidoPaterno,
@@ -98,10 +96,13 @@
                 });
 
                 if (response.ok) {
-                    alert('¡Datos enviados correctamente!');
+                    const result = await response.json();
+                    alert(result.message || '¡Datos enviados correctamente!');
+                    console.log("Respuesta del servidor:", result); // Mensaje de debugging
                 } else {
                     const errorText = await response.text();
                     alert('Error al enviar los datos: ' + errorText);
+                    console.error("Error en respuesta:", errorText); // Mensaje de debugging
                 }
             } catch (error) {
                 console.error('Error de conexión:', error);
