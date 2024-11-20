@@ -35,7 +35,52 @@
                 </li>
                 <li>
                     <label for="estado_nacimiento">Lugar de Nacimiento:</label>
-                    <input type="text" id="estado_nacimiento" name="estado_nacimiento" required oninput="actualizarCURPyRFC()">
+                    <select id="estado_nacimiento" name="estado_nacimiento" required oninput="actualizarCURPyRFC()">
+                        <option value="" disabled selected>Seleccione el estado</option>
+                        <option value="AS">Aguascalientes</option>
+                        <option value="BC">Baja California</option>
+                        <option value="BS">Baja California Sur</option>
+                        <option value="CC">Campeche</option>
+                        <option value="CL">Coahuila</option>
+                        <option value="CM">Colima</option>
+                        <option value="CS">Chiapas</option>
+                        <option value="CH">Chihuahua</option>
+                        <option value="DF">Ciudad de México</option>
+                        <option value="DG">Durango</option>
+                        <option value="GT">Guanajuato</option>
+                        <option value="GR">Guerrero</option>
+                        <option value="HG">Hidalgo</option>
+                        <option value="JC">Jalisco</option>
+                        <option value="MC">Estado de México</option>
+                        <option value="MN">Michoacán</option>
+                        <option value="MS">Morelos</option>
+                        <option value="NT">Nayarit</option>
+                        <option value="NL">Nuevo León</option>
+                        <option value="OC">Oaxaca</option>
+                        <option value="PL">Puebla</option>
+                        <option value="QT">Querétaro</option>
+                        <option value="QR">Quintana Roo</option>
+                        <option value="SP">San Luis Potosí</option>
+                        <option value="SL">Sinaloa</option>
+                        <option value="SR">Sonora</option>
+                        <option value="TC">Tabasco</option>
+                        <option value="TS">Tamaulipas</option>
+                        <option value="TL">Tlaxcala</option>
+                        <option value="VZ">Veracruz</option>
+                        <option value="YN">Yucatán</option>
+                        <option value="ZS">Zacatecas</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="curso">Selecciona un Curso:</label>
+                    <select id="curso" name="curso" required>
+                        <option value="MB101">Matemáticas Básicas</option>
+                        <option value="CS102">Ciencias Sociales</option>
+                        <option value="TE103">Tecnología en Ingeniería</option>
+                        <option value="SA104">Salud Pública</option>
+                        <option value="CM105">Ciencias Médicas</option>
+                        <option value="AE106">Administración de Empresas</option>
+                    </select>
                 </li>
                 <li>
                     <label for="curp">CURP:</label>
@@ -62,19 +107,31 @@
     <script>
         document.getElementById("inscripcionForm").addEventListener("submit", async function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
-            console.log("Enviando datos..."); // Mensaje de debugging
 
-            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php'; // Cambiar si la URL de ngrok es diferente
+            // Generar CURP y RFC antes de enviar
+            actualizarCURPyRFC();
 
-            const nombre = document.getElementById("nombre").value;
-            const apellidoPaterno = document.getElementById("apellido_paterno").value;
-            const apellidoMaterno = document.getElementById("apellido_materno").value;
-            const correo = document.getElementById("correo").value || "prueba@correo.com"; // Agrega un campo de correo si falta en el HTML
-            const identificacion = document.getElementById("identificacion").value || "123456"; // Agrega un campo de identificación si falta
-            const curso = document.getElementById("curso").value || "CS102"; // Agrega un campo de curso si falta en el HTML
+            // Asegurarse de que CURP y RFC están generados antes de continuar
             const curp = document.getElementById("curp").value;
             const rfc = document.getElementById("rfc").value;
 
+            if (!curp || !rfc) {
+                alert("CURP o RFC no generados correctamente.");
+                return;
+            }
+
+            // URL de la API
+            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php';
+
+            // Recopilación de datos del formulario
+            const nombre = document.getElementById("nombre").value;
+            const apellidoPaterno = document.getElementById("apellido_paterno").value;
+            const apellidoMaterno = document.getElementById("apellido_materno").value;
+            const correo = "prueba@correo.com"; // Reemplaza con el valor adecuado
+            const identificacion = "123456"; // Reemplaza con el valor adecuado
+            const curso = document.getElementById("curso").value;
+
+            // Preparar el objeto de datos para enviar
             const data = {
                 nombre,
                 apellidoPaterno,
@@ -98,11 +155,9 @@
                 if (response.ok) {
                     const result = await response.json();
                     alert(result.message || '¡Datos enviados correctamente!');
-                    console.log("Respuesta del servidor:", result); // Mensaje de debugging
                 } else {
                     const errorText = await response.text();
                     alert('Error al enviar los datos: ' + errorText);
-                    console.error("Error en respuesta:", errorText); // Mensaje de debugging
                 }
             } catch (error) {
                 console.error('Error de conexión:', error);
