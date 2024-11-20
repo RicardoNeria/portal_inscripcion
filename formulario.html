@@ -108,22 +108,23 @@
         document.getElementById("inscripcionForm").addEventListener("submit", async function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
 
-            // Generar CURP y RFC antes de enviar
+            // Llamar a la función para generar CURP y RFC antes de enviar
             actualizarCURPyRFC();
 
-            // Asegurarse de que CURP y RFC están generados antes de continuar
+            // Obtener valores de CURP y RFC para asegurarse de que fueron generados
             const curp = document.getElementById("curp").value;
             const rfc = document.getElementById("rfc").value;
 
+            // Validar que CURP y RFC están generados antes de enviar
             if (!curp || !rfc) {
-                alert("CURP o RFC no generados correctamente.");
+                alert("CURP o RFC no generados correctamente. Verifique los datos.");
                 return;
             }
 
-            // URL de la API
-            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php';
+            // Definir la URL de la API
+            const apiUrl = 'https://3e83-2806-2a0-800-92ea-543a-dc93-d48b-50bf.ngrok-free.app/api.php'; // Actualiza con tu URL de ngrok
 
-            // Recopilación de datos del formulario
+            // Recopilar todos los valores del formulario
             const nombre = document.getElementById("nombre").value;
             const apellidoPaterno = document.getElementById("apellido_paterno").value;
             const apellidoMaterno = document.getElementById("apellido_materno").value;
@@ -131,7 +132,7 @@
             const identificacion = "123456"; // Reemplaza con el valor adecuado
             const curso = document.getElementById("curso").value;
 
-            // Preparar el objeto de datos para enviar
+            // Preparar los datos para enviar a la API
             const data = {
                 nombre,
                 apellidoPaterno,
